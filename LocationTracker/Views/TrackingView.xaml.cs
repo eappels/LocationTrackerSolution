@@ -19,6 +19,14 @@ public partial class TrackingView : ContentPage
         {
             if (map is not null)
             {
+                if (location.Latitude == 0 && location.Longitude == 0)
+                {
+                    if (map.Pins.Count > 0)
+                    {
+                        map.Pins.Clear();
+                    }
+                    return;
+                }
                 if (map.Pins.Count == 0)
                 {                   
                     Pin pin = new Pin()

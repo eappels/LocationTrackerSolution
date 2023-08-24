@@ -23,6 +23,8 @@ public class TrackingViewModel : BaseViewModel, IDisposable
     {
         if (IsTracking)
             WeakReferenceMessenger.Default.Send(new Location(e.Latitude, e.Longitude));
+        else
+            WeakReferenceMessenger.Default.Send(new Location(0, 0));
     }
 
     private bool isTracking;
