@@ -1,14 +1,28 @@
-﻿using LocationTracker.Helpers;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using LocationTracker.Helpers;
+using LocationTracker.Models;
+using LocationTracker.Services;
+using System.Diagnostics;
 
 namespace LocationTracker.ViewModels;
 
 public class TrackingViewModel : BaseViewModel, IDisposable
 {
 
+    private readonly LocationService locationService;
 
-    public TrackingViewModel()
+    public TrackingViewModel(LocationService locationService)
     {
-        IsTracking = false;
+        this.locationService = locationService;
+        locationService.Initialize();
+        locationService.LocationChanged += OnLocationChanged;
+        IsTracking = true;
+    }
+
+    private void OnLocationChanged(object sender, LocationModel e)
+    {
+        if (IsTracking)
+            WeakReferenceMessenger.Default.Send(new Location(e.Latitude, e.Longitude));
     }
 
     private bool isTracking;
@@ -20,6 +34,7 @@ public class TrackingViewModel : BaseViewModel, IDisposable
 
     public void Dispose()
     {
-
+        locationService.LocationChanged -= OnLocationChanged;
+        locationService.IosStop();
     }
 }

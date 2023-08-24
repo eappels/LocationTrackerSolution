@@ -9,7 +9,8 @@
         <Switch IsToggled="{Binding IsTracking}"
                 Grid.Column="0"
                 Grid.Row="0" />
-        <maps:Map Grid.Row="1"
+        <maps:Map x:Name="map" 
+                  Grid.Row="1"
                   Grid.Column="1" />
     </Grid>
 </ContentPage>
