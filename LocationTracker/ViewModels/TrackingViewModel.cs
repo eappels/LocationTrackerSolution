@@ -10,6 +10,10 @@ public class TrackingViewModel : BaseViewModel, IDisposable
 {
 
     private readonly LocationService locationService;
+    private List<LocationModel> RouteHistory = new ();
+
+    public Command ClearRouteHistoryCommand
+        => new Command(() => ClearRouteHistory());
 
     public TrackingViewModel(LocationService locationService)
     {
@@ -22,9 +26,20 @@ public class TrackingViewModel : BaseViewModel, IDisposable
     private void OnLocationChanged(object sender, LocationModel e)
     {
         if (IsTracking)
+        {
+            RouteHistory.Add(e);
             WeakReferenceMessenger.Default.Send(new Location(e.Latitude, e.Longitude));
+        }
         else
+        {
             WeakReferenceMessenger.Default.Send(new Location(0, 0));
+        }
+    }
+
+    private void ClearRouteHistory()
+    {
+        RouteHistory.Clear();
+        WeakReferenceMessenger.Default.Send("ClearRouteHistory");
     }
 
     private bool isTracking;

@@ -2,6 +2,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using LocationTracker.ViewModels;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
+using System.Diagnostics;
 
 namespace LocationTracker.Views;
 
@@ -49,14 +50,17 @@ public partial class TrackingView : ContentPage
                 }
             }
         });
-    }
 
-    private void OnClear_Clicked(object sender, EventArgs e)
-    {
-        if (map.MapElements.Count > 0)
+        WeakReferenceMessenger.Default.Register<string>(this, (s, str) =>
         {
-            if (line is not null)
-                line.Geopath.Clear();
-        }
+            if (str == "ClearRouteHistory")
+            {
+                if (map.MapElements.Count > 0)
+                {
+                    if (line is not null)
+                        line.Geopath.Clear();
+                }
+            }
+        });
     }
 }

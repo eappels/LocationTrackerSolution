@@ -18,7 +18,7 @@
                   Grid.RowSpan="3"
                   Grid.Column="1" />
         <Button Text="Clear"
-                Clicked="OnClear_Clicked"
+                Command="{Binding ClearRouteHistoryCommand}"
                 Margin="10"
                 ZIndex="1"
                 Grid.Row="2"
