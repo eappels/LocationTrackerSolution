@@ -15,10 +15,6 @@ public partial class TrackingView : ContentPage
 		InitializeComponent();
 		BindingContext = viewModel;
 
-#if DEBUG
-        map.MoveToRegion(MapSpan.FromCenterAndRadius(new Location(51.166065270430614, 3.8475870795395712), Distance.FromMeters(100)));
-#endif
-
         WeakReferenceMessenger.Default.Register<Location>(this, (s, location) =>
         {
             if (map is not null)
@@ -32,6 +28,7 @@ public partial class TrackingView : ContentPage
                         Location = location
                     };
                     map.Pins.Add(pin);
+                    map.MoveToRegion(MapSpan.FromCenterAndRadius(pin.Location, Distance.FromMeters(100)));
                 }
                 else
                 {
@@ -44,5 +41,14 @@ public partial class TrackingView : ContentPage
                 }
             }
         });
+    }
+
+    private void OnClear_Clicked(object sender, EventArgs e)
+    {
+        if (map.MapElements.Count > 0)
+        {
+            if (line is not null)
+                line.Geopath.Clear();
+        }
     }
 }

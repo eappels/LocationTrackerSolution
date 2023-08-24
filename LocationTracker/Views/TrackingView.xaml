@@ -7,10 +7,21 @@
     <Grid ColumnDefinitions="1*"
           RowDefinitions="0.1*, 0.8*, 0.1*">
         <Switch IsToggled="{Binding IsTracking}"
+                VerticalOptions="Center"
+                Margin="10,0,0,0"
+                ZIndex="1"
                 Grid.Column="0"
                 Grid.Row="0" />
-        <maps:Map x:Name="map" 
-                  Grid.Row="1"
+        <maps:Map x:Name="map"
+                  ZIndex="0"
+                  Grid.Row="0"
+                  Grid.RowSpan="3"
                   Grid.Column="1" />
+        <Button Text="Clear"
+                Clicked="OnClear_Clicked"
+                Margin="10"
+                ZIndex="1"
+                Grid.Row="2"
+                Grid.Column="1" />
     </Grid>
 </ContentPage>

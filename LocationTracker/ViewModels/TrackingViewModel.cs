@@ -16,7 +16,7 @@ public class TrackingViewModel : BaseViewModel, IDisposable
         this.locationService = locationService;
         locationService.Initialize();
         locationService.LocationChanged += OnLocationChanged;
-        IsTracking = true;
+        IsTracking = false;
     }
 
     private void OnLocationChanged(object sender, LocationModel e)
