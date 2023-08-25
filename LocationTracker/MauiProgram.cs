@@ -1,4 +1,5 @@
 ﻿using LocationTracker.Services;
+using LocationTracker.Services.Interfaces;
 using LocationTracker.ViewModels;
 using LocationTracker.Views;
 using Microsoft.Extensions.Logging;
@@ -24,6 +25,7 @@ public static class MauiProgram
 #if DEBUG
         mauiAppBuilder.Logging.AddDebug();
 #endif
+        mauiAppBuilder.Services.AddSingleton<IDBService, DBService>();
         mauiAppBuilder.Services.AddSingleton<LocationService>();
         mauiAppBuilder.Services.AddSingleton<TrackingViewModel>();
         mauiAppBuilder.Services.AddTransient<TrackingView>();

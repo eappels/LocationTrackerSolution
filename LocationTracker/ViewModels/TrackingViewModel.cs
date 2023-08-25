@@ -2,6 +2,7 @@
 using LocationTracker.Helpers;
 using LocationTracker.Models;
 using LocationTracker.Services;
+using LocationTracker.Services.Interfaces;
 
 namespace LocationTracker.ViewModels;
 
@@ -9,14 +10,17 @@ public class TrackingViewModel : BaseViewModel, IDisposable
 {
 
     private readonly LocationService locationService;
+    private readonly IDBService dBService;
+
     private List<LocationModel> RouteHistory = new();
 
     public Command ClearRouteHistoryCommand
         => new Command(() => ClearRouteHistory());
 
-    public TrackingViewModel(LocationService locationService)
+    public TrackingViewModel(LocationService locationService, IDBService dBService)
     {
         this.locationService = locationService;
+        this.dBService = dBService;
         locationService.Initialize();
         locationService.LocationChanged += OnLocationChanged;
         IsTracking = false;
@@ -42,8 +46,10 @@ public class TrackingViewModel : BaseViewModel, IDisposable
 
     public async Task SaveRouteHistory()
     {
-        //Save to DB
-        await Task.Delay(1000);
+        await dBService.Save(new RouteInfo
+        {
+            RouteHistory = RouteHistory
+        });
         RouteHistory.Clear();
     }
 
