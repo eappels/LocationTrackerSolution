@@ -2,7 +2,6 @@
 using LocationTracker.Helpers;
 using LocationTracker.Models;
 using LocationTracker.Services;
-using System.Diagnostics;
 
 namespace LocationTracker.ViewModels;
 
@@ -10,7 +9,7 @@ public class TrackingViewModel : BaseViewModel, IDisposable
 {
 
     private readonly LocationService locationService;
-    private List<LocationModel> RouteHistory = new ();
+    private List<LocationModel> RouteHistory = new();
 
     public Command ClearRouteHistoryCommand
         => new Command(() => ClearRouteHistory());
@@ -37,9 +36,15 @@ public class TrackingViewModel : BaseViewModel, IDisposable
     }
 
     private void ClearRouteHistory()
+    {        
+        WeakReferenceMessenger.Default.Send("ClearRouteHistoryRequest");
+    }
+
+    public async Task SaveRouteHistory()
     {
+        //Save to DB
+        await Task.Delay(1000);
         RouteHistory.Clear();
-        WeakReferenceMessenger.Default.Send("ClearRouteHistory");
     }
 
     private bool isTracking;

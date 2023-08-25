@@ -2,7 +2,6 @@ using CommunityToolkit.Mvvm.Messaging;
 using LocationTracker.ViewModels;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
-using System.Diagnostics;
 
 namespace LocationTracker.Views;
 
@@ -54,15 +53,31 @@ public partial class TrackingView : ContentPage
             }
         });
 
-        WeakReferenceMessenger.Default.Register<string>(this, (s, str) =>
+        WeakReferenceMessenger.Default.Register<string>(this, async (s, str) =>
         {
-            if (str == "ClearRouteHistory")
+            switch (str)
             {
-                if (map.MapElements.Count > 0)
-                {
-                    if (line is not null)
-                        line.Geopath.Clear();
-                }
+                case "ClearRouteHistoryRequest":
+                    string action = await DisplayActionSheet("Save ?", "Cancel", null, "Save and clear", "Clear");
+                    switch (action)
+                    {
+                        case "Save and clear":
+                            await viewModel.SaveRouteHistory();
+                            if (map.MapElements.Count > 0)
+                            {
+                                if (line is not null)
+                                    line.Geopath.Clear();
+                            }
+                            break;
+                        case "Clear":
+                            if (map.MapElements.Count > 0)
+                            {
+                                if (line is not null)
+                                    line.Geopath.Clear();
+                            }
+                            break;
+                    }
+                    break;
             }
         });
     }
