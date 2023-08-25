@@ -28,6 +28,10 @@ public partial class TrackingView : ContentPage
                     }
                     return;
                 }
+                if (map.MapElements.Count == 0)
+                {
+                    map.MapElements.Add(line);
+                }
                 if (map.Pins.Count == 0)
                 {                   
                     Pin pin = new Pin()
@@ -41,12 +45,11 @@ public partial class TrackingView : ContentPage
                 }
                 else
                 {
-                    map.Pins[0].Location = location;
-                    line.Geopath.Add(location);
+                    map.Pins[0].Location = location;                    
                 }
-                if (map.MapElements.Count == 0)
+                if (line is not null)
                 {
-                    map.MapElements.Add(line);
+                    line.Geopath.Add(location);
                 }
             }
         });
