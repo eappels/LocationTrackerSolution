@@ -3,10 +3,10 @@
 public class RouteInfo
 {
     public string Date { get; private set; }
-    public List<LocationModel> RouteHistory { get; set; }
+    public string RouteHistory { get; set; }
 
     public RouteInfo()
     {
-        Date = DateTime.Now.ToString("O");
+        Date = DateTime.Now.ToString("dd-mmy-yyyy");
     }
 }

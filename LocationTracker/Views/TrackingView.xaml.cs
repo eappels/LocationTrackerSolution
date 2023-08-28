@@ -55,6 +55,7 @@ public partial class TrackingView : ContentPage
 
         WeakReferenceMessenger.Default.Register<string>(this, async (s, str) =>
         {
+            button.IsVisible = false;
             switch (str)
             {
                 case "ClearRouteHistoryRequest":
@@ -67,6 +68,7 @@ public partial class TrackingView : ContentPage
                             {
                                 if (line is not null)
                                     line.Geopath.Clear();
+                                button.IsVisible = true;
                             }
                             break;
                         case "Clear":
@@ -74,6 +76,7 @@ public partial class TrackingView : ContentPage
                             {
                                 if (line is not null)
                                     line.Geopath.Clear();
+                                button.IsVisible = true;
                             }
                             break;
                     }

@@ -25,6 +25,13 @@ public class DBService : IDBService
 
     public async Task<int> Save(RouteInfo route)
     {
+        await Init();
         return await Database.InsertAsync(route);
+    }
+
+    public async Task<List<RouteInfo>> GetRoutes()
+    {
+        await Init();
+        return await Database.Table<RouteInfo>().Where(ri => ri.Date == DateTime.Now.ToString("dd-mmy-yyyy")).ToListAsync();
     }
 }

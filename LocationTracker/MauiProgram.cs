@@ -28,7 +28,9 @@ public static class MauiProgram
         mauiAppBuilder.Services.AddSingleton<IDBService, DBService>();
         mauiAppBuilder.Services.AddSingleton<LocationService>();
         mauiAppBuilder.Services.AddSingleton<TrackingViewModel>();
+        mauiAppBuilder.Services.AddSingleton<HistoryViewModel>();
         mauiAppBuilder.Services.AddTransient<TrackingView>();
+        mauiAppBuilder.Services.AddTransient<HistoryView>();
         return mauiAppBuilder;
     }
 }

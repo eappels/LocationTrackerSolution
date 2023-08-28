@@ -62,8 +62,9 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(TargetFramework)'=='net7.0-ios'">
-	  <CodesignKey>Apple Development: Created via API (DLUWD66A4M)</CodesignKey>
+	  <CodesignKey>Apple Development: Created via API (KX848TLB7U)</CodesignKey>
 	  <CodesignProvision>VS: WildCard Development</CodesignProvision>
+	  <ProvisioningType>manual</ProvisioningType>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -101,6 +102,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\HistoryView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\TrackingView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

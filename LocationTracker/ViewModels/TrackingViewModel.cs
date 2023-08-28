@@ -3,6 +3,7 @@ using LocationTracker.Helpers;
 using LocationTracker.Models;
 using LocationTracker.Services;
 using LocationTracker.Services.Interfaces;
+using System.Text.Json;
 
 namespace LocationTracker.ViewModels;
 
@@ -40,7 +41,7 @@ public class TrackingViewModel : BaseViewModel, IDisposable
     }
 
     private void ClearRouteHistory()
-    {        
+    {
         WeakReferenceMessenger.Default.Send("ClearRouteHistoryRequest");
     }
 
@@ -48,7 +49,7 @@ public class TrackingViewModel : BaseViewModel, IDisposable
     {
         await dBService.Save(new RouteInfo
         {
-            RouteHistory = RouteHistory
+            RouteHistory = SerializeToString()
         });
         RouteHistory.Clear();
     }
@@ -64,5 +65,15 @@ public class TrackingViewModel : BaseViewModel, IDisposable
     {
         locationService.LocationChanged -= OnLocationChanged;
         locationService.IosStop();
+    }
+
+    private string SerializeToString()
+    {
+        return JsonSerializer.Serialize<List<LocationModel>>(RouteHistory);
+    }
+
+    private List<LocationModel> DeSerializeFromString(string data)
+    {
+        return JsonSerializer.Deserialize<List<LocationModel>>(data);
     }
 }

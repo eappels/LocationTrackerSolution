@@ -19,6 +19,7 @@
                   Grid.Column="1" />
         <Button Text="Clear"
                 Command="{Binding ClearRouteHistoryCommand}"
+                x:Name="button"
                 Margin="10"
                 ZIndex="1"
                 Grid.Row="2"

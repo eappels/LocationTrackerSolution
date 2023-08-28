@@ -5,4 +5,5 @@ namespace LocationTracker.Services.Interfaces;
 public interface IDBService
 {
     Task<int> Save(RouteInfo route);
+    Task<List<RouteInfo>> GetRoutes();
 }
